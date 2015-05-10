@@ -298,22 +298,38 @@ void Camera::updateRecordTime()
     ui->statusbar->showMessage(str);
 }
 
+
 void Camera::processCapturedImage(int requestId, const QImage& img)
 { 
     Q_UNUSED(requestId);
-//    QImage scaledImage = img.scaled(ui->viewfinder->size(),
-//                                    Qt::KeepAspectRatio,
-//                                    Qt::SmoothTransformation);
+    QImage scaledImage = img.scaled(ui->lastImagePreviewLabel->size(),
+                                    Qt::KeepAspectRatio,
+                                    Qt::SmoothTransformation);
 
-    //ui->lastImagePreviewLabel->setPixmap(QPixmap::fromImage(scaledImage));
-    ui->lastImagePreviewLabel->setPixmap(QPixmap::fromImage(img));
+    ui->lastImagePreviewLabel->setPixmap(QPixmap::fromImage(scaledImage));
+    //ui->lastImagePreviewLabel->setPixmap(QPixmap::fromImage(img));
 
     // Display captured image for 4 seconds.
     displayCapturedImage();
     QTimer::singleShot(4000, this, SLOT(displayViewfinder()));
 
-    //socket->
 }
+
+//void Camera::processCapturedImage(int requestId, const QImage& img)
+//{
+//    Q_UNUSED(requestId);
+////    QImage scaledImage = img.scaled(ui->viewfinder->size(),
+////                                    Qt::KeepAspectRatio,
+////                                    Qt::SmoothTransformation);
+
+//    //ui->lastImagePreviewLabel->setPixmap(QPixmap::fromImage(scaledImage));
+//    ui->lastImagePreviewLabel->setPixmap(QPixmap::fromImage(img));
+
+//    // Display captured image for 4 seconds.
+//    displayCapturedImage();
+//    QTimer::singleShot(4000, this, SLOT(displayViewfinder()));
+
+//}
 
 void Camera::configureCaptureSettings()
 {
